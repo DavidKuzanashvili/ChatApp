@@ -1,0 +1,27 @@
+﻿@model Chat
+
+<div class="chat">
+    <section class="chat__body">
+        @foreach(var message in Model.Messages)
+        {
+            <div class="chat__body__message">
+                <header>
+                    <strong>@message.Name:</strong>
+                </header>
+                <p>
+                    @message.Text
+                </p>
+                <footer>@message.Timestamp</footer>
+            </div>
+        }
+    </section>
+
+    <form onsubmit="sendMessage(event)" asp-controller="Home" asp-action="CreateMessage" class="chat__input">
+        <input id="chat__input" type="text" name="message" placeholder="type message" />
+        <button type="submit">
+            Send
+        </button>
+        <input type="hidden" name="chatId" value="@Model.Id" />
+        <input type="hidden" name="roomName" value="@Model.Name" />
+    </form>
+</div>

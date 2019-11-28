@@ -1,0 +1,278 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-layout {
+    flex-grow: 1;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    background-color: #eee;
+}
+
+.navigation {
+    background-color: #47196d;
+    height: 70px;
+    z-index: 100;
+    box-shadow: 0 1px 2px 0 #333;
+}
+
+.navigation > nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+}
+
+.navigation > nav > a {
+    color: white;
+    margin-right: 2rem;
+    text-decoration: none;
+}
+
+.side-menu {
+    min-width: 100px;
+    background-color: #443554;
+}
+
+.side-menu .side-menu__room-btn {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    height: 68px;
+    border-radius: 5px;
+    background-color: #57446b;
+    box-shadow: 0 1px 2px 0 #222;
+}
+
+.room-btn {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    height: 68px;
+    border-radius: 5px;
+    background-color: #57446b;
+    box-shadow: 0 1px 2px 0 #222;
+}
+
+.side-menu .side-menu__room-btn:hover {
+    box-shadow: 0 1px 2px 0 #444;
+}
+
+.chat {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+}
+
+.chat .chat__body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 1rem;
+    overflow: auto;
+}
+
+.chat .chat__body .chat__body__message {
+    display: flex;
+    flex-direction: row;
+    margin: 0.2rem 0;
+}
+
+.chat .chat__body .chat__body__message:first-child {
+    margin-top: auto;
+}
+
+.chat .chat__body .chat__body__message > * {
+    padding: 0.2rem;
+}
+
+.chat .chat__body .chat__body__message > header {
+    min-width: 120px;
+    text-align: right;
+}
+
+.chat .chat__body .chat__body__message > p {
+    flex-grow: 5;
+    text-align: left;
+    margin: 0;
+}
+
+.chat .chat__body .chat__body__message > footer {
+    min-width: 60px;
+    text-align: center;
+}
+
+.chat .chat__input {
+    display: flex;
+    flex-direction: row;
+    min-height: 75px;
+    background-color: #47196d;
+    box-shadow: 0 -1px 2px 0 #333;
+    padding: 1rem;
+}
+
+.chat
+.chat__input > input {
+    flex-grow: 1;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #444;
+    color: white;
+}
+
+.chat
+.chat__input > button {
+    flex-grow: 1;
+    color: white;
+    background-color: #57446b;
+    box-shadow: 0 1px 2px 0 #222;
+    border: none;
+    outline: none;
+    margin-left: 1rem;
+    cursor: pointer;
+}
+
+.chat
+.chat__input > button:hover {
+    box-shadow: 0 1px 2px 0 #444;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 200;
+    background-color: rgba(80, 80, 80, 0.8);
+}
+
+.modal.modal--active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal
+.modal__body {
+    position: relative;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    background-color: #4c2869;
+    padding: 1rem;
+}
+
+.modal
+.modal__body
+.modal__body__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: white;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.modal
+.modal__body > header {
+    color: #fff;
+    font-size: 24px;
+}
+
+.modal
+.modal__body > div {
+    margin: 1rem 0;
+}
+
+.modal
+.modal__body > div > input {
+    width: 100%;
+    color: white;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid white;
+    background-color: transparent;
+}
+
+.modal
+.modal__body > footer {
+    text-align: center;
+}
+
+.modal
+.modal__body > footer > button {
+    color: white;
+    font-size: 18px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.register-page,
+.login-page {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-page > form,
+.login-page > form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.register-page > form > *,
+.login-page > form > * {
+    margin-top: 1rem;
+}
+
+.register-page > form > input,
+.login-page > form > input {
+    padding: 0.6rem;
+    outline: none;
+    background-color: azure;
+    border: none;
+    border-radius: 10px;
+}
+
+.register-page > form > button,
+.login-page > form > button {
+    background-color: blueviolet;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    padding: 1rem;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.register-page > a,
+.login-page > a {
+    text-decoration: none;
+    color: blueviolet;
+}
