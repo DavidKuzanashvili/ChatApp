@@ -7,16 +7,16 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         var _connectionId = '';
+        var _body = document.querySelector(".chat__body");
 
         var connection = new signalR.HubConnectionBuilder()
             .withUrl("/chatHub")
             .build();
 
+        _body.scrollBy(0, _body.scrollHeight);
+
         connection.on("RecieveMessage", function (data) {
             try {
-                console.log("Data: ", data);
-                var body = document.querySelector(".chat__body");
-
                 var message = document.createElement("div");
                 message.classList.add("chat__body__message");
 
@@ -37,14 +37,16 @@
                 message.appendChild(p);
                 message.appendChild(footer);
 
-                body.append(message);
+                _body.append(message);
+
+                _body.scrollBy(0, _body.scrollHeight);
             } catch (err) {
                 console.error(err);
             }
         });
 
         var joinRoom = function () {
-            var url = '/Chat/JoinRoom/' + _connectionId + '/@Model.Name';
+            var url = '/Chat/JoinRoom/' + _connectionId + '/@Model.Id';
             axios.post(url, null)
                 .then(function (res) {
                     console.log("Joined Room: ", res);

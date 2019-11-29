@@ -31,6 +31,50 @@ namespace ChatApp.Controllers
             return View(chats);
         }
 
+        [HttpGet]
+        public IActionResult Find()
+        {
+            var users = context.Users
+                .Where(x => x.Id != User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                .ToList();
+
+            return View(users);
+        }
+
+        public async Task<IActionResult> CreatePrivateRoom(string userId)
+        {
+            var chat = new Chat
+            {
+                Type = ChatType.Private
+            };
+
+            chat.Users.Add(new ChatUser
+            {
+                UserId = userId
+            });
+
+            chat.Users.Add(new ChatUser
+            {
+                UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value
+            });
+
+            context.Chats.Add(chat);
+            await context.SaveChangesAsync();
+
+            return RedirectToAction("Chat", new { id = chat.Id });
+        }
+
+        public IActionResult Private()
+        {
+            var chats = context.Chats
+                .Include(x => x.Users)
+                .ThenInclude(x => x.User)
+                .Where(x => x.Type == ChatType.Private && x.Users.Any(u => u.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                .ToList();
+
+            return View(chats);
+        }
+
         [HttpGet("{id}")]
         public IActionResult Chat(int id)
         {
@@ -38,7 +82,7 @@ namespace ChatApp.Controllers
                 .Include(x => x.Messages)
                 .FirstOrDefault(x => x.Id == id);
 
-            return View(chat);
+            return View(chat ?? new Chat());
         }
 
         [HttpPost]

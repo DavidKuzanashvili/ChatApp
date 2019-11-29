@@ -1,4 +1,5 @@
 ﻿using ChatApp.Database;
+using ChatApp.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace ChatApp.ViewComponents
             var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var chats = context.ChatUsers
                 .Include(x => x.Chat)
-                .Where(x => x.UserId == userId)
+                .Where(x => x.UserId == userId && x.Chat.Type == ChatType.Room)
                 .Select(x => x.Chat)
                 .ToList();
 

@@ -20,32 +20,31 @@ namespace ChatApp.Controllers
             this.chat = chat;
         }
 
-        [HttpPost("[action]/{connectionId}/{roomName}")]
-        public async Task<IActionResult> JoinRoom(string connectionId, string roomName, int chatId)
+        [HttpPost("[action]/{connectionId}/{roomId}")]
+        public async Task<IActionResult> JoinRoom(string connectionId, string roomId, int chatId)
         {
-            await chat.Groups.AddToGroupAsync(connectionId, roomName);
+            await chat.Groups.AddToGroupAsync(connectionId, roomId);
             return Ok();
         }
 
-        [HttpPost("[action]/{connectionId}/{roomName}")]
-        public async Task<IActionResult> LeaveRoom(string connectionId, string roomName, int chatId)
+        [HttpPost("[action]/{connectionId}/{roomId}")]
+        public async Task<IActionResult> LeaveRoom(string connectionId, string roomId, int chatId)
         {
-            await chat.Groups.RemoveFromGroupAsync(connectionId, roomName);
+            await chat.Groups.RemoveFromGroupAsync(connectionId, roomId);
             return Ok();
         }
 
         [HttpPost("[action]")]
         public async Task<IActionResult> SendMessage(
             string message, 
-            int chatId,
-            string roomName,
+            int roomId,
             [FromServices] AppDbContext context)
         {
             try
             {
                 var msg = new Message
                 {
-                    ChatId = chatId,
+                    ChatId = roomId,
                     Name = User.Identity.Name,
                     Text = message,
                     Timestamp = DateTime.Now
@@ -54,7 +53,7 @@ namespace ChatApp.Controllers
                 context.Messages.Add(msg);
                 await context.SaveChangesAsync();
 
-                await chat.Clients.Group(roomName).SendAsync("RecieveMessage", msg);
+                await chat.Clients.Group(roomId.ToString()).SendAsync("RecieveMessage", msg);
             }
             catch (Exception ex)
             {

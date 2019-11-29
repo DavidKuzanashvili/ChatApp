@@ -2,6 +2,18 @@
     <nav>
         @if (User.Identity.IsAuthenticated)
         {
+            <a asp-controller="Home" asp-action="Index">
+                Home
+            </a>
+
+            <a asp-controller="Home" asp-action="Find">
+                Find
+            </a>
+
+            <a asp-controller="Home" asp-action="Private">
+                Private
+            </a>
+
             <a asp-controller="Account" asp-action="Logout">
                 Log Out
             </a>
