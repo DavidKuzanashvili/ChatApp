@@ -9,6 +9,58 @@
         var _connectionId = '';
         var _body = document.querySelector(".chat__body");
 
+        var messageBuilder = function () {
+            var message = null;
+            var header = null;
+            var p = null;
+            var footer = null;
+
+            return {
+                createMessage: function (classList) {
+                    message = document.createElement("div");
+
+                    if (classList === undefined)
+                        classList = [];
+
+                    for (var i = 0; i < classList.legth; i++) {
+                        message.classList.add(classList[i]);
+                    }
+
+                    message.classList.add("chat__body__message");
+
+                    return this;
+                },
+                withHeader: function (text) {
+                    var strong = document.createElement("strong");
+                    strong.appendChild(document.createTextNode(text + ':'));
+
+                    header = document.createElement("header");
+                    header.appendChild(strong);
+
+                    return this;
+                },
+                withParagraph: function (text) {
+                    p = document.createElement("p");
+                    p.appendChild(document.createTextNode(text));
+
+                    return this;
+                },
+                withFooter: function (text) {
+                    footer = document.createElement("footer");
+                    var date = new Date(text).toDateString();
+                    footer.appendChild(document.createTextNode(date));
+
+                    return this;
+                },
+                build: function () {
+                    message.appendChild(header);
+                    message.appendChild(p);
+                    message.appendChild(footer);
+                    return message;
+                }
+            };
+        }
+
         var connection = new signalR.HubConnectionBuilder()
             .withUrl("/chatHub")
             .build();
@@ -17,25 +69,12 @@
 
         connection.on("RecieveMessage", function (data) {
             try {
-                var message = document.createElement("div");
-                message.classList.add("chat__body__message");
-
-                var strong = document.createElement("strong");
-                strong.appendChild(document.createTextNode(data.name + ':'));
-
-                var header = document.createElement("header");
-                header.appendChild(strong);
-
-                var p = document.createElement("p");
-                p.appendChild(document.createTextNode(data.text));
-
-                var footer = document.createElement("footer");
-                var date = new Date(data.timestamp).toDateString();
-                footer.appendChild(document.createTextNode(date));
-
-                message.appendChild(header);
-                message.appendChild(p);
-                message.appendChild(footer);
+                var message = messageBuilder()
+                    .createMessage()
+                    .withHeader(data.name)
+                    .withParagraph(data.text)
+                    .withFooter(data.timestamp)
+                    .build();
 
                 _body.append(message);
 

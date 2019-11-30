@@ -134,7 +134,7 @@ namespace ChatApp.Controllers
             context.ChatUsers.Add(chatUser);
 
             await context.SaveChangesAsync();
-            return RedirectToAction("Chat", "Home", new { id = id });
+            return RedirectToAction("Chat", "Home", new { id });
         }
     }
 }
