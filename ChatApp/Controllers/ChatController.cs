@@ -1,10 +1,12 @@
 ﻿using ChatApp.Database;
 using ChatApp.Hubs;
+using ChatApp.Infrastructure;
 using ChatApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ChatApp.Controllers
@@ -59,6 +61,21 @@ namespace ChatApp.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
+
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendNotification(int roomId, [FromServices] AppDbContext context)
+        {
+            string userName = context.Users
+                .Where(x => x.Id == User.GetUserId())
+                .Select(x => x.UserName)
+                .FirstOrDefault();
+
+            await chat.Clients
+                .Group(roomId.ToString())
+                .SendAsync("RecieveNotification", $"{userName} wants to chat with u!");
 
             return Ok();
         }

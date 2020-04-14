@@ -1,4 +1,5 @@
 ﻿using ChatApp.Database;
+using ChatApp.Infrastructure;
 using ChatApp.Models;
 using ChatApp.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -25,7 +26,7 @@ namespace ChatApp.Controllers
         {
             var chats = context.Chats
                 .Include(x => x.Users)
-                .Where(x => !x.Users.Any(y => y.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                .Where(x => !x.Users.Any(y => y.UserId == User.GetUserId()))
                 .ToList();
 
             return View(chats);
@@ -35,7 +36,7 @@ namespace ChatApp.Controllers
         public IActionResult Find()
         {
             var users = context.Users
-                .Where(x => x.Id != User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                .Where(x => x.Id != User.GetUserId())
                 .ToList();
 
             return View(users);
@@ -55,7 +56,7 @@ namespace ChatApp.Controllers
 
             chat.Users.Add(new ChatUser
             {
-                UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value
+                UserId = User.GetUserId()
             });
 
             context.Chats.Add(chat);
@@ -69,7 +70,7 @@ namespace ChatApp.Controllers
             var chats = context.Chats
                 .Include(x => x.Users)
                 .ThenInclude(x => x.User)
-                .Where(x => x.Type == ChatType.Private && x.Users.Any(u => u.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                .Where(x => x.Type == ChatType.Private && x.Users.Any(u => u.UserId == User.GetUserId()))
                 .ToList();
 
             return View(chats);
@@ -112,7 +113,7 @@ namespace ChatApp.Controllers
 
             chat.Users.Add(new ChatUser
             {
-                UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                UserId = User.GetUserId(),
                 Role = UserRole.Admin
             });
 
@@ -127,7 +128,7 @@ namespace ChatApp.Controllers
             var chatUser = new ChatUser
             {
                 ChatId = id,
-                UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                UserId = User.GetUserId(),
                 Role = UserRole.Member
             };
 

@@ -9,7 +9,7 @@
         @foreach (var user in Model)
         {
             <li>
-                <a asp-controller="Home" asp-action="CreatePrivateRoom" asp-route-userId="@user.Id">
+                <a class="user-selector" asp-controller="Home" asp-action="CreatePrivateRoom" asp-route-userId="@user.Id">
                     @user.UserName
                 </a>
             </li>
@@ -18,3 +18,14 @@
     </ul>
 </div>
 
+@section scripts {
+    <script>
+        var userButtons = document.querySelectorAll('.user-selector');
+
+        userButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                console.log(this);
+            });
+        });
+    </script>
+}

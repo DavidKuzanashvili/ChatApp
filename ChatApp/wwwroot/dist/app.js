@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("\n\n//# sourceURL=webpack:///./wwwroot/src/js/index.js?");
+eval("const con = new signalR.HubConnectionBuilder()\r\n    .withUrl(\"/chatHub\")\r\n    .build();\r\n\r\ncon.on(\"RecieveNotification\", function (data) {\r\n    console.log(\"Notify: \", data);\r\n});\n\n//# sourceURL=webpack:///./wwwroot/src/js/index.js?");
 
 /***/ }),
 
