@@ -2,12 +2,10 @@ using ChatApp.Database;
 using ChatApp.Hubs;
 using ChatApp.Models;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace ChatApp
 {
@@ -24,7 +22,7 @@ namespace ChatApp
         {
             services.AddMvc(options => options.EnableEndpointRouting = false);
 
-            services.AddDbContext<AppDbContext>(options => 
+            services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<User, IdentityRole>(options =>
@@ -41,18 +39,21 @@ namespace ChatApp
             services.AddSignalR();
         }
 
-        [Obsolete]
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, AppDbContext db)
         {
+            db.Database.EnsureCreated();
+
             app.UseDeveloperExceptionPage();
 
             app.UseStaticFiles();
 
+            app.UseRouting();
+
             app.UseAuthentication();
 
-            app.UseSignalR(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapHub<ChatHub>("/chatHub");
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
 
             app.UseMvcWithDefaultRoute();
