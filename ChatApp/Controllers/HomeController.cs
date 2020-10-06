@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ChatApp.Controllers
@@ -22,7 +21,7 @@ namespace ChatApp.Controllers
             this.context = context;
         }
 
-        public IActionResult Index() 
+        public IActionResult Index()
         {
             var chats = context.Chats
                 .Include(x => x.Users)

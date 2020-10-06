@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace ChatApp
 {
@@ -40,18 +39,21 @@ namespace ChatApp
             services.AddSignalR();
         }
 
-        [Obsolete]
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, AppDbContext db)
         {
+            db.Database.EnsureCreated();
+
             app.UseDeveloperExceptionPage();
 
             app.UseStaticFiles();
 
+            app.UseRouting();
+
             app.UseAuthentication();
 
-            app.UseSignalR(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapHub<ChatHub>("/chatHub");
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
 
             app.UseMvcWithDefaultRoute();
