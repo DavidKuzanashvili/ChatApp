@@ -1,4 +1,7 @@
-﻿* {
+﻿@import './components/menu/menu.scss';
+@import './components/awesome-notifications/notifications.scss';
+
+* {
     box-sizing: border-box;
 }
 

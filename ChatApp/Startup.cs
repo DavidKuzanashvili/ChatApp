@@ -20,7 +20,8 @@ namespace ChatApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddMvc(options => options.EnableEndpointRouting = false)
+                .AddRazorRuntimeCompilation();
 
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
@@ -54,6 +55,7 @@ namespace ChatApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<ChatHub>("/chatHub");
+                endpoints.MapHub<NotificationHub>("/notificationHub");
             });
 
             app.UseMvcWithDefaultRoute();

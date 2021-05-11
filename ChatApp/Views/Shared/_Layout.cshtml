@@ -4,13 +4,14 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/dist/app.css" rel="stylesheet" />
+    @RenderSection("Styles", false)
 </head>
 <body>
-    <partial name="Partials/Menu/Menu">
+    <partial name="Partials/Menu/Menu" />
+
     <section class="main-layout">
-        @if(User.Identity.IsAuthenticated)
+        @if (User.Identity.IsAuthenticated)
         {
             <vc:room></vc:room>
         }
@@ -19,9 +20,6 @@
 
     <partial name="Partials/Modal/Modal" />
 
-    <script src="~/js/signalr.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="~/js/site.js"></script>
     <script src="~/dist/app.js"></script>
     @RenderSection("Scripts", false)
 </body>

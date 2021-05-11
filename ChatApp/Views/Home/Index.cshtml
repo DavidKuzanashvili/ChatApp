@@ -4,6 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
+@section Styles {
+    <link href="~/dist/home.css" rel="stylesheet" />
+}
+
 <div class="chat">
     <div class="chat__body">
         @foreach (var chat in Model)
@@ -14,3 +18,7 @@
         }
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/dist/home.js"></script>
+}
