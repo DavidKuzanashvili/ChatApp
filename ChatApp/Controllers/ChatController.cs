@@ -38,7 +38,7 @@ namespace ChatApp.Controllers
 
         [HttpPost("[action]")]
         public async Task<IActionResult> SendMessage(
-            string message, 
+            string message,
             int roomId,
             [FromServices] AppDbContext context)
         {
@@ -65,7 +65,7 @@ namespace ChatApp.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPost("[action]/{roomId}")]
         public async Task<IActionResult> SendNotification(int roomId, [FromServices] AppDbContext context)
         {
             string userName = context.Users
