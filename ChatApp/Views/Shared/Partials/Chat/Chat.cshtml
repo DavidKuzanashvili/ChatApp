@@ -2,7 +2,7 @@
 
 <div class="chat">
     <section class="chat__body">
-        @foreach(var message in Model.Messages)
+        @foreach (var message in Model.Messages)
         {
             <div class="chat__body__message">
                 <header>
@@ -16,7 +16,10 @@
         }
     </section>
 
-    <form onsubmit="sendMessage(event)" asp-controller="Home" asp-action="CreateMessage" class="chat__input">
+    <form onsubmit="sendMessage(event)"
+          asp-controller="Home"
+          asp-action="CreateMessage"
+          class="chat__input">
         <input id="chat__input" type="text" name="message" placeholder="type message" />
         <button type="submit">
             Send

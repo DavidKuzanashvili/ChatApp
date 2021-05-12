@@ -21,12 +21,12 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(ttf|png|jpg|gif)$/i,
+                test: /\.(ttf|woff|woff2|png|jpg|gif)$/i,
                 use: [
                     {
                         loader: 'url-loader',
                         options: {
-                            limit: 8192,
+                            limit: 100000,
                         },
                     },
                 ],
@@ -51,7 +51,10 @@ module.exports = {
                         loader: 'extract-loader'
                     },
                     {
-                        loader: 'css-loader'
+                        loader: 'css-loader',
+                        options: {
+                            url: false
+                        }
                     },
                     {
                         loader: 'sass-loader'

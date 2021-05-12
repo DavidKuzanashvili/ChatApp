@@ -1,4 +1,6 @@
-﻿@import './components/menu/menu.scss';
+﻿@import '../assets/fonts/FiraCode/fira_code.scss';
+
+@import './components/menu/menu.scss';
 @import './components/awesome-notifications/notifications.scss';
 
 * {
@@ -6,7 +8,9 @@
 }
 
 html,
-body {
+body,
+button,
+input {
     font-family: 'Fira Code Retina';
 }
 

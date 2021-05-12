@@ -86,11 +86,11 @@ namespace ChatApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMessage(int chatId, string message)
+        public async Task<IActionResult> CreateMessage(int roomId, string message)
         {
             var msg = new Message
             {
-                ChatId = chatId,
+                ChatId = roomId,
                 Name = User.Identity.Name,
                 Text = message,
                 Timestamp = DateTime.Now
@@ -98,7 +98,7 @@ namespace ChatApp.Controllers
 
             context.Messages.Add(msg);
             await context.SaveChangesAsync();
-            return RedirectToAction("Chat", new { id = chatId });
+            return RedirectToAction("Chat", new { id = roomId });
         }
 
         [HttpPost]
