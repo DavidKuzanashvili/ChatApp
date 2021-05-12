@@ -24,7 +24,9 @@ const con = new signalR.HubConnectionBuilder()
     .build();
 
 con.on("NotifyAll", function (data) {
-    const notifier = new AWN();
+    const notifier = new AWN({
+        position: 'top-right',
+    });
     notifier.success(data.text);
 });
 

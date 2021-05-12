@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    font-family: 'Fira Code Retina';
+}
+
 body {
     margin: 0;
     height: 100vh;
@@ -108,7 +113,8 @@ body {
 
 .chat .chat__body .chat__body__message > header {
     min-width: 120px;
-    text-align: right;
+    padding-left: 20px;
+    text-align: left;
 }
 
 .chat .chat__body .chat__body__message > p {

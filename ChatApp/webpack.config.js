@@ -19,32 +19,45 @@ module.exports = {
         path: path.resolve(__dirname, 'wwwroot/dist')
     },
     module: {
-        rules: [{
-            test: /\.scss$/,
-            exclude: /(node_modules|bower_components)/,
-            use: [
-                {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
-                },
-                {
-                    loader: 'file-loader',
-                    options: {
-                        name: '[name].css'
-                    }
-                },
-                {
-                    loader: 'extract-loader'
-                },
-                {
-                    loader: "css-loader"
-                },
-                {
-                    loader: "sass-loader"
-                }
-            ]
-        }]
+        rules: [
+            {
+                test: /\.(ttf|png|jpg|gif)$/i,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192,
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.scss$/,
+                exclude: /(node_modules|bower_components)/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-env']
+                        }
+                    },
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].css'
+                        }
+                    },
+                    {
+                        loader: 'extract-loader'
+                    },
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'sass-loader'
+                    },
+                ]
+            },
+        ]
     }
 };
